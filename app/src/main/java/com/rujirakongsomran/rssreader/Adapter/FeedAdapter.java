@@ -1,6 +1,8 @@
 package com.rujirakongsomran.rssreader.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +71,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.tvTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.tvPubData.setText(rssObject.getItems().get(position).getPubDate());
         holder.tvContent.setText(rssObject.getItems().get(position).getContent());
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                if (!isLongClick) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(rssObject.getItems().get(position).getLink()));
+                    view.getContext().startActivity(browserIntent);
+                }
+            }
+        });
     }
 
     @Override
